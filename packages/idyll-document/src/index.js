@@ -158,6 +158,21 @@ class Wrapper extends React.PureComponent {
             hooks.forEach(hook => {
               this[hook] = c.props[hook] || function(){};
             });
+            if (c.props.help) {
+              const items = Object.entries(c.type.defaultProps).map(([k, v]) => {
+                const type = Array.isArray(v) ? 'array' : typeof v;
+                return <li key={k}>{k}: {type}</li>
+              })
+              return (
+                <ul style={{
+                  backgroundColor: 'lightskyblue',
+                  border: '8px solid steelblue',
+                  padding: '1em 2em'
+                }}>
+                  {items}
+                </ul>
+              )
+            }
             return React.cloneElement(c, {...this.state});
           })
         }
